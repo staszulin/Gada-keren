@@ -12,8 +12,19 @@
   .table th, .table td { padding:14px; text-align:center; border-bottom:1px solid #2e334d; }
   .table th { background:#22263a; font-weight:700; }
   .day-today { background:#f0a50033 !important; font-weight:800; }
-  .order { background:#1a1d27; border-radius:10px; padding:16px; margin-bottom:12px; border:1px solid #2e334d; }
+  .order-card {
+    background:#1a1d27;
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:16px;
+    border:1px solid #2e334d;
+    transition: all 0.3s;
+  }
+  .order-card:hover { border-color:#f0a500; transform: translateY(-4px); }
   .btn { width:100%; padding:16px; background:#f0a500; color:#000; border:none; border-radius:10px; font-weight:700; font-size:17px; margin-top:12px; }
+  .status-new { border-left:5px solid #f0a500; }
+  .status-picking { border-left:5px solid #3b82f6; }
+  .status-done { border-left:5px solid #22c55e; }
 </style>
 </head>
 <body>
@@ -114,7 +125,7 @@ function sendOrder() {
 function renderOrders() {
   const container = document.getElementById('ordersList');
   container.innerHTML = orders.map(o => `
-    <div class="order">
+    <div class="order ${o.status === 'חדש' ? 'status-new' : o.status === 'לוקט' ? 'status-done' : ''}">
       <strong>${o.branch}</strong><br>
       <small style="color:#22c55e">יום: ${o.day}</small><br>
       ${o.notes ? `<small style="color:#f0a500">הערה: ${o.notes}</small>` : ''}
@@ -152,7 +163,6 @@ function renderManagerStats() {
     html += `<div style="background:#22263a;padding:12px;margin-bottom:8px;border-radius:8px">${branch} — ${count} הזמנות</div>`;
   });
 
-  // התראה על סניפים שלא הזמינו
   const stale = branches.filter(b => {
     return !orders.some(o => o.branch === b.name && (Date.now() - o.id) < 1000*60*60*24*14);
   });
@@ -167,37 +177,4 @@ function renderManagerStats() {
 // Push Notifications
 function notifyNewOrder(order) {
   if (Notification.permission === 'granted') {
-    new Notification('הזמנה חדשה!', {
-      body: `סניף: ${order.branch}\nיום: ${order.day}`,
-      icon: 'https://via.placeholder.com/192x192/0f1117/f0a500?text=G'
-    });
-  }
-}
-
-function checkStaleOrders() {
-  const now = Date.now();
-  const stale = orders.filter(o => {
-    const age = (now - o.id) / (1000*60*60*24);
-    return age > 3 && o.status === 'חדש';
-  });
-  if (stale.length > 0 && Notification.permission === 'granted') {
-    new Notification('⚠️ הזמנות תקועות!', {
-      body: `${stale.length} הזמנות מחכות לליקוט יותר מ-3 ימים`,
-      icon: 'https://via.placeholder.com/192x192/0f1117/f0a500?text=G'
-    });
-  }
-}
-
-// Start
-renderSchedule();
-renderBranches();
-renderOrders();
-renderManagerStats();
-setInterval(checkStaleOrders, 1000*60*60);
-
-if ('Notification' in window) {
-  Notification.requestPermission();
-}
-</script>
-</body>
-</html>
+    new Notification('הזמנ
