@@ -1,95 +1,278 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>GADA GROUP</title>
+
+<html dir="rtl" lang="he"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Geda Y. Keren Ltd - Logistics App</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#ffffff",
+                    "primary": "#00288e",
+                    "on-tertiary-container": "#b4bbd5",
+                    "background": "#f7f9fb",
+                    "on-error-container": "#93000a",
+                    "surface-container-highest": "#e0e3e5",
+                    "surface-container-high": "#e6e8ea",
+                    "on-tertiary-fixed-variant": "#3f465c",
+                    "surface-variant": "#e0e3e5",
+                    "on-primary-fixed-variant": "#173bab",
+                    "on-tertiary": "#ffffff",
+                    "outline-variant": "#c4c5d5",
+                    "secondary-fixed": "#ffdbca",
+                    "secondary": "#9d4300",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-secondary-fixed": "#341100",
+                    "on-primary-fixed": "#001453",
+                    "surface-container-low": "#f2f4f6",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#ffb690",
+                    "on-surface": "#191c1e",
+                    "surface-bright": "#f7f9fb",
+                    "tertiary-container": "#434b60",
+                    "on-primary-container": "#a8b8ff",
+                    "surface-tint": "#3755c3",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed-dim": "#bec6e0",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-primary": "#b8c4ff",
+                    "on-surface-variant": "#444653",
+                    "outline": "#757684",
+                    "inverse-surface": "#2d3133",
+                    "tertiary": "#2d3449",
+                    "surface-dim": "#d8dadc",
+                    "primary-fixed-dim": "#b8c4ff",
+                    "on-tertiary-fixed": "#131b2e",
+                    "tertiary-fixed": "#dae2fd",
+                    "secondary-container": "#fd761a",
+                    "on-primary": "#ffffff",
+                    "on-secondary-container": "#5c2400",
+                    "on-background": "#191c1e",
+                    "error-container": "#ffdad6",
+                    "surface": "#f7f9fb",
+                    "primary-container": "#1e40af",
+                    "primary-fixed": "#dde1ff",
+                    "surface-container": "#eceef0",
+                    "on-secondary-fixed-variant": "#783200"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "12px",
+                    "section-margin": "24px",
+                    "card-gap": "12px",
+                    "unit": "4px",
+                    "container-padding": "16px"
+            },
+            "fontFamily": {
+                    "label-md": ["JetBrains Mono"],
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "headline-sm": ["Hanken Grotesk"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "label-sm": ["10px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "26px", "fontWeight": "600"}],
+                    "headline-lg": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
 <style>
-  body { font-family: 'Heebo', sans-serif; background:#0f1117; color:#f0f2ff; margin:0; }
-  .header { background:#1a1d27; padding:20px; text-align:center; border-bottom:3px solid #f0a500; }
-  .card { background:#1a1d27; border-radius:12px; padding:20px; margin:15px 0; border:1px solid #2e334d; }
-  .btn { width:100%; padding:18px; background:#f0a500; color:#000; border:none; border-radius:10px; font-size:18px; font-weight:700; margin-top:20px; }
-  select, textarea { width:100%; padding:16px; border-radius:10px; background:#22263a; color:white; margin-bottom:15px; }
-</style>
+        body {
+            background-color: #f7f9fb;
+            font-family: 'Hanken Grotesk', sans-serif;
+            color: #191c1e;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 12px;
+        }
+        .step-number {
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
 </head>
-<body>
-
-<div class="header">
-  <h1>GADA GROUP</h1>
-  <p>מערכת הפצה • סטס זולין ©</p>
+<body class="bg-background">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant flex justify-between items-center px-container-padding h-14 w-full">
+<div class="flex items-center gap-3">
+<img alt="Geda Y. Keren Logo" class="h-8 w-auto rounded-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6dnwRlm_7CL1PppX5F1rj_eMXx8XvytX_Z6COrz1eu7DnYzIdTp60P6wfr-NXygGd5sd-bxKj8ZMgmqwE_fWkR_SImiFVJS9Lw0SGV0vrbc6dzieFxrHzpSU7BQuZGZqjiOPC8x5U62bGekghaLF0JuOZNC1cKVHLK5Gf8WfU8KJYunR_th0YxKkF537qUosevJc_4fzvv18I-HKCdv9iD3_Irwzn73OKS04IzxvfSbNkF7C5UzU3LHCLutGbBviEk7P-ieCblxPn"/>
+<h1 class="text-headline-sm font-headline-sm font-bold text-primary">גדא י.קרן בע"מ</h1>
 </div>
-
-<div style="padding:20px">
-  <h2>יצירת הזמנה (סוכן)</h2>
-  <select id="branch">
-    <option value="">בחר סניף...</option>
-    <option>מקס סטוק - אילת</option>
-    <option>מקס סטוק - אשדוד</option>
-    <option>מקס סטוק - באר שבע</option>
-    <option>זול סטוק - באר שבע</option>
-    <option>ביג סטוק - חולון</option>
-  </select>
-  <textarea id="notes" placeholder="הערות..." rows="4"></textarea>
-  <button onclick="sendOrder()" class="btn">שלח הזמנה</button>
-
-  <h2 style="margin-top:40px">ליקוט (מלקט)</h2>
-  <div id="orders"></div>
+<div class="hidden md:flex gap-4">
+<span class="text-label-md font-label-md text-primary font-bold">הורדה</span>
+<span class="text-label-md font-label-md text-on-surface-variant hover:text-primary cursor-pointer transition-colors">תמיכה</span>
 </div>
-
+<button class="material-symbols-outlined text-primary md:hidden">menu</button>
+</header>
+<main class="pt-20 pb-32 max-w-7xl mx-auto px-container-padding">
+<!-- Hero Section -->
+<section class="flex flex-col lg:flex-row items-center gap-12 py-12">
+<div class="flex-1 text-right lg:text-right">
+<div class="flex items-center gap-2 bg-error-container text-on-error-container px-4 py-2 rounded-lg mb-6 w-fit">
+<span class="material-symbols-outlined text-[20px]">lock</span>
+<span class="text-label-md font-bold">גישה מורשית בלבד - צוות גדא י.קרן בע"מ</span>
+</div><span class="inline-block bg-primary/10 text-primary px-3 py-1 rounded-full text-label-sm font-label-sm uppercase tracking-wider mb-4">
+                    גרסה 2.4.0 זמינה
+                </span>
+<h2 class="text-headline-lg font-headline-lg text-on-surface mb-4 leading-tight">הורדת אפליקציה פנימית</h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant mb-8 max-w-xl">הקישור הזה הוא אישי ומיועד לשימוש פנימי בלבד. נא לא להפיץ אותו לגורמים שאינם מורשים.</p>
+<div class="flex flex-wrap gap-4">
+<a class="bg-primary text-on-primary px-8 py-4 rounded-xl flex items-center gap-3 hover:bg-primary-container transition-all active:scale-95 shadow-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">phone_iphone</span>
+<div class="text-right">
+<div class="text-[10px] opacity-80 leading-none">Download on the</div>
+<div class="font-bold text-lg leading-tight">App Store</div>
+</div>
+</a>
+<a class="bg-inverse-surface text-on-primary px-8 py-4 rounded-xl flex items-center gap-3 hover:bg-surface-variant transition-all active:scale-95 shadow-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+<div class="text-right">
+<div class="text-[10px] opacity-80 leading-none">GET IT ON</div>
+<div class="font-bold text-lg leading-tight">Google Play</div>
+</div>
+</a>
+</div>
+</div>
+<!-- Hero Visual -->
+<div class="flex-1 relative w-full max-w-md">
+<div class="absolute -inset-4 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="relative bg-white border border-outline-variant p-2 rounded-[3rem] shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500">
+<div class="bg-surface-container rounded-[2.5rem] overflow-hidden aspect-[9/19] relative">
+<div class="w-full h-full bg-cover bg-center" data-alt="A high-fidelity mobile application interface showing a professional logistics dashboard. The screen features map views with blue delivery routes, status cards in a clean white and slate blue palette, and real-time tracking data. The overall atmosphere is industrial yet modern, emphasizing efficiency and clarity for a corporate logistics environment." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCDONiWK1gnNmmjqARf0Yzlz4UjDKwW2TJSgkR76SO5CPRahKyjblNCveLOz3k6ZpIfXSVkfYYYn4H7kcA67UgPE6XaT2UMjOiP2yoM6zl3SnB_G9dx1Ui_ObTREipVs3YjA9KmRPh_NLO3jeFqxQU2X41Lr3ti7xLTCB8DGA_t_w2ywV7OH8k9gAt_iA1IoHDNUYm8jx_byDrLWh7st8YKITunmo1FwSKOvqQROX7P--WFos3-B-mq8Mebz-mK1-jhdT8tNR6wZUzj')"></div>
+<!-- Floating Data Card UI Over App -->
+<div class="absolute bottom-12 left-[-20%] right-10 bg-white p-4 rounded-xl border border-outline-variant shadow-lg animate-bounce-slow">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-secondary-container rounded-lg flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">local_shipping</span>
+</div>
+<div class="text-right flex-1">
+<div class="text-label-sm font-label-sm text-on-surface-variant">מספר משלוח: #4829-X</div>
+<div class="text-body-md font-body-md font-bold text-primary">בדרך ליעד</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid Sections -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter mt-section-margin">
+<!-- Scan QR Card -->
+<div class="md:col-span-1 bg-white border border-outline-variant p-8 rounded-xl flex flex-col items-center text-center justify-center">
+<div class="p-4 bg-surface-container rounded-xl mb-4 border border-outline-variant">
+<div class="w-32 h-32 bg-on-surface flex items-center justify-center rounded-lg">
+<span class="material-symbols-outlined text-white text-6xl">qr_code_2</span>
+</div>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-primary mb-2">סרוק והתקן</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">סרקו את הקוד למעבר מהיר להורדת האפליקציה</p>
+</div>
+<!-- Installation Guide -->
+<div class="md:col-span-2 bg-surface-container-low border border-outline-variant p-8 rounded-xl">
+<h3 class="text-headline-sm font-headline-sm text-on-surface mb-8">הוראות התקנה מהירות</h3>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+<!-- Step 1 -->
+<div class="flex flex-col gap-3">
+<div class="step-number text-headline-md text-primary/20 font-bold leading-none">01</div>
+<h4 class="text-body-lg font-bold text-primary">הורדה</h4>
+<p class="text-body-md text-on-surface-variant">לחצו על כפתור ההורדה המתאים למכשירכם בחלק העליון.</p>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col gap-3">
+<div class="step-number text-headline-md text-primary/20 font-bold leading-none">02</div>
+<h4 class="text-body-lg font-bold text-primary">הוספה למסך הבית</h4>
+<p class="text-body-md text-on-surface-variant">במכשירי iOS לחצו על "שתף" ואז "הוסף למסך הבית".</p>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col gap-3">
+<div class="step-number text-headline-md text-primary/20 font-bold leading-none">03</div>
+<h4 class="text-body-lg font-bold text-primary">התחברות</h4>
+<p class="text-body-md text-on-surface-variant">השתמשו בפרטי המשתמש שקיבלתם מהמנהל לכניסה ראשונה.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Features Mini-Showcase -->
+<section class="mt-section-margin">
+<h3 class="text-headline-md font-headline-md text-center mb-10 text-primary">כל מה שצריך במקום אחד</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white border border-outline-variant p-6 rounded-xl hover:border-primary transition-all">
+<span class="material-symbols-outlined text-secondary text-3xl mb-4">inventory</span>
+<h4 class="text-body-md font-bold mb-1">ניהול מלאי</h4>
+<p class="text-label-sm text-on-surface-variant">עדכוני מלאי בזמן אמת מהשטח</p>
+</div>
+<div class="bg-white border border-outline-variant p-6 rounded-xl hover:border-primary transition-all">
+<span class="material-symbols-outlined text-secondary text-3xl mb-4">map</span>
+<h4 class="text-body-md font-bold mb-1">אופטימיזציית מסלול</h4>
+<p class="text-label-sm text-on-surface-variant">ניווט חכם בין נקודות הפצה</p>
+</div>
+<div class="bg-white border border-outline-variant p-6 rounded-xl hover:border-primary transition-all">
+<span class="material-symbols-outlined text-secondary text-3xl mb-4">assignment_turned_in</span>
+<h4 class="text-body-md font-bold mb-1">אישור מסירה</h4>
+<p class="text-label-sm text-on-surface-variant">חתימה דיגיטלית וצילום מוצר</p>
+</div>
+<div class="bg-white border border-outline-variant p-6 rounded-xl hover:border-primary transition-all">
+<span class="material-symbols-outlined text-secondary text-3xl mb-4">monitoring</span>
+<h4 class="text-body-md font-bold mb-1">דיווחים בזמן אמת</h4>
+<p class="text-label-sm text-on-surface-variant">סנכרון מלא מול הנהלת החשבונות</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest border-t border-outline-variant py-12 px-container-padding text-center">
+<div class="max-w-7xl mx-auto flex flex-col items-center gap-6">
+<div class="flex items-center gap-3 grayscale opacity-60">
+<img alt="Logo Gray" class="h-6 w-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6dnwRlm_7CL1PppX5F1rj_eMXx8XvytX_Z6COrz1eu7DnYzIdTp60P6wfr-NXygGd5sd-bxKj8ZMgmqwE_fWkR_SImiFVJS9Lw0SGV0vrbc6dzieFxrHzpSU7BQuZGZqjiOPC8x5U62bGekghaLF0JuOZNC1cKVHLK5Gf8WfU8KJYunR_th0YxKkF537qUosevJc_4fzvv18I-HKCdv9iD3_Irwzn73OKS04IzxvfSbNkF7C5UzU3LHCLutGbBviEk7P-ieCblxPn"/>
+<span class="text-body-md font-bold text-on-surface-variant">גדא י.קרן בע"מ</span>
+</div>
+<div class="text-on-surface-variant text-body-md">
+                © <span id="year">2024</span> כל הזכויות שמורות לגדא י.קרן בע"מ. לוגיסטיקה והפצה.
+            </div>
+<div class="text-on-surface-variant text-label-sm font-label-md">
+                Designed &amp; Developed by <span class="font-bold text-primary">Stas Zolin</span>
+</div>
+</div>
+</footer>
 <script>
-let orders = JSON.parse(localStorage.getItem('gada_orders')) || [];
+        document.getElementById('year').textContent = new Date().getFullYear();
 
-function saveOrders() {
-  localStorage.setItem('gada_orders', JSON.stringify(orders));
-}
-
-function sendOrder() {
-  const branch = document.getElementById('branch').value;
-  if (!branch) return alert("בחר סניף");
-  const notes = document.getElementById('notes').value || '';
-  
-  const order = {
-    id: Date.now(),
-    branch: branch,
-    notes: notes,
-    status: 'חדש',
-    time: new Date().toLocaleTimeString('he-IL')
-  };
-  
-  orders.unshift(order);
-  saveOrders();
-  renderOrders();
-  alert(`✅ הזמנה נשלחה!\nסניף: ${branch}`);
-}
-
-function renderOrders() {
-  const div = document.getElementById('orders');
-  div.innerHTML = orders.map(o => `
-    <div class="card">
-      <strong>${o.branch}</strong><br>
-      <small>${o.time}</small><br>
-      ${o.notes ? `<small style="color:#f0a500">הערה: ${o.notes}</small>` : ''}
-      <button onclick="complete(${o.id})" style="margin-top:10px;padding:10px 20px;background:#22c55e;color:black;border:none;border-radius:8px">סיים ליקוט</button>
-    </div>
-  `).join('');
-}
-
-function complete(id) {
-  const order = orders.find(o => o.id === id);
-  if (order) {
-    const pallets = prompt("כמה משטחים?", "8");
-    if (pallets) {
-      order.pallets = pallets;
-      order.status = 'לוקט';
-      saveOrders();
-      renderOrders();
-      alert(`ליקוט הושלם! ${pallets} משטחים`);
-    }
-  }
-}
-
-// Start
-renderOrders();
-</script>
-</body>
-</html>
+        // Simple scroll reveal interaction
+        window.addEventListener('scroll', () => {
+            const elements = document.querySelectorAll('.hover\\:border-primary');
+            elements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if(rect.top < window.innerHeight) {
+                    el.classList.add('translate-y-0', 'opacity-100');
+                }
+            });
+        });
+    </script>
+</body></html>
