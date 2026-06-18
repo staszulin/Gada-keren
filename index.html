@@ -3,178 +3,93 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>GADA GROUP – חלוקה חכמה</title>
+<title>GADA GROUP</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&display=swap');
   body { font-family: 'Heebo', sans-serif; background:#0f1117; color:#f0f2ff; margin:0; }
-  .header { background:#1a1d27; padding:14px 20px; display:flex; justify-content:space-between; border-bottom:2px solid #f0a500; }
-  .table { width:100%; border-collapse:collapse; margin:20px 0; }
-  .table th, .table td { padding:14px; text-align:center; border-bottom:1px solid #2e334d; }
-  .table th { background:#22263a; font-weight:700; }
-  .day-today { background:#f0a50033 !important; font-weight:800; }
-  .order-card {
-    background:#1a1d27;
-    border-radius:12px;
-    padding:18px;
-    margin-bottom:16px;
-    border:1px solid #2e334d;
-    transition: all 0.3s;
-  }
-  .order-card:hover { border-color:#f0a500; transform: translateY(-4px); }
-  .btn { width:100%; padding:16px; background:#f0a500; color:#000; border:none; border-radius:10px; font-weight:700; font-size:17px; margin-top:12px; }
-  .status-new { border-left:5px solid #f0a500; }
-  .status-picking { border-left:5px solid #3b82f6; }
-  .status-done { border-left:5px solid #22c55e; }
+  .header { background:#1a1d27; padding:20px; text-align:center; border-bottom:3px solid #f0a500; }
+  .card { background:#1a1d27; border-radius:12px; padding:20px; margin:15px 0; border:1px solid #2e334d; }
+  .btn { width:100%; padding:18px; background:#f0a500; color:#000; border:none; border-radius:10px; font-size:18px; font-weight:700; margin-top:20px; }
+  select, textarea { width:100%; padding:16px; border-radius:10px; background:#22263a; color:white; margin-bottom:15px; }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div style="font-size:24px;font-weight:900;color:#f0a500">GADA GROUP</div>
-  <div style="font-size:13px">סטס זולין ©</div>
+  <h1>GADA GROUP</h1>
+  <p>מערכת הפצה • סטס זולין ©</p>
 </div>
 
 <div style="padding:20px">
-  <h2 style="margin-bottom:16px">טבלת ימי הפצה</h2>
-  <table class="table" id="scheduleTable"></table>
-
-  <h2 style="margin:30px 0 16px">יצירת הזמנה (סוכן)</h2>
-  <select id="branchSelect" style="width:100%;padding:16px;border-radius:10px;background:#22263a;color:white;margin-bottom:12px"></select>
-  <textarea id="notes" placeholder="הערות..." style="width:100%;height:90px;padding:14px;border-radius:10px;background:#22263a;color:white;margin-bottom:12px"></textarea>
+  <h2>יצירת הזמנה (סוכן)</h2>
+  <select id="branch">
+    <option value="">בחר סניף...</option>
+    <option>מקס סטוק - אילת</option>
+    <option>מקס סטוק - אשדוד</option>
+    <option>מקס סטוק - באר שבע</option>
+    <option>זול סטוק - באר שבע</option>
+    <option>ביג סטוק - חולון</option>
+  </select>
+  <textarea id="notes" placeholder="הערות..." rows="4"></textarea>
   <button onclick="sendOrder()" class="btn">שלח הזמנה</button>
 
-  <h2 style="margin:30px 0 16px">ליקוט (מלקט)</h2>
-  <div id="ordersList"></div>
-
-  <h2 style="margin:30px 0 16px">מנהל - סטטיסטיקה</h2>
-  <div id="managerStats"></div>
+  <h2 style="margin-top:40px">ליקוט (מלקט)</h2>
+  <div id="orders"></div>
 </div>
 
 <script>
-// ====================== DATA ======================
-const zonesSchedule = {
-  'דרום': ['ראשון'],
-  'צפון-גליל': ['שני', 'חמישי'],
-  'מרכז-ירושלים': ['שלישי'],
-  'חיפה-שרון': ['רביעי', 'חמישי']
-};
-
-const branches = [
-  {name:"מקס סטוק - אילת", zone:"דרום"},
-  {name:"מקס סטוק - אשדוד", zone:"דרום"},
-  {name:"מקס סטוק - באר שבע", zone:"דרום"},
-  {name:"מקס סטוק - אור עקיבא", zone:"צפון-גליל"},
-  {name:"זול סטוק - חדרה", zone:"חיפה-שרון"},
-  {name:"זול סטוק - ראשון לציון", zone:"מרכז-ירושלים"},
-  {name:"ביג סטוק - חולון", zone:"מרכז-ירושלים"}
-];
-
 let orders = JSON.parse(localStorage.getItem('gada_orders')) || [];
 
-// ====================== FUNCTIONS ======================
 function saveOrders() {
   localStorage.setItem('gada_orders', JSON.stringify(orders));
 }
 
-function getDistributionDay(zone) {
-  const possible = zonesSchedule[zone] || ['שלישי'];
-  return possible[0];
-}
-
-function renderSchedule() {
-  let html = `<tr><th>יום</th><th>אזורים</th><th>הזמנות</th></tr>`;
-  Object.keys(zonesSchedule).forEach(zone => {
-    zonesSchedule[zone].forEach(day => {
-      html += `<tr><td>\( {day}</td><td> \){zone}</td><td>0</td></tr>`;
-    });
-  });
-  document.getElementById('scheduleTable').innerHTML = html;
-}
-
-function renderBranches() {
-  const sel = document.getElementById('branchSelect');
-  sel.innerHTML = '<option value="">בחר סניף...</option>' + branches.map(b => `<option value="\( {b.name}"> \){b.name}</option>`).join('');
-}
-
 function sendOrder() {
-  const branchName = document.getElementById('branchSelect').value;
-  if (!branchName) return alert("בחר סניף");
-  
-  const branch = branches.find(b => b.name === branchName);
+  const branch = document.getElementById('branch').value;
+  if (!branch) return alert("בחר סניף");
   const notes = document.getElementById('notes').value || '';
-
+  
   const order = {
     id: Date.now(),
-    branch: branch.name,
-    zone: branch.zone,
-    day: getDistributionDay(branch.zone),
+    branch: branch,
     notes: notes,
     status: 'חדש',
-    pallets: null,
     time: new Date().toLocaleTimeString('he-IL')
   };
-
+  
   orders.unshift(order);
   saveOrders();
   renderOrders();
-  renderManagerStats();
-  notifyNewOrder(order);
-  alert(`✅ הזמנה נשלחה!\nסניף: ${branch.name}\nיום חלוקה: ${order.day}`);
+  alert(`✅ הזמנה נשלחה!\nסניף: ${branch}`);
 }
 
 function renderOrders() {
-  const container = document.getElementById('ordersList');
-  container.innerHTML = orders.map(o => `
-    <div class="order ${o.status === 'חדש' ? 'status-new' : o.status === 'לוקט' ? 'status-done' : ''}">
+  const div = document.getElementById('orders');
+  div.innerHTML = orders.map(o => `
+    <div class="card">
       <strong>${o.branch}</strong><br>
-      <small style="color:#22c55e">יום: ${o.day}</small><br>
+      <small>${o.time}</small><br>
       ${o.notes ? `<small style="color:#f0a500">הערה: ${o.notes}</small>` : ''}
-      ${o.pallets ? `<small style="color:#22c55e">משטחים: \( {o.pallets}</small>` : `<button onclick="completePicking( \){o.id})" style="margin-top:8px;padding:8px 16px;background:#22c55e;color:black;border:none;border-radius:6px">סיים ליקוט</button>`}
+      <button onclick="complete(${o.id})" style="margin-top:10px;padding:10px 20px;background:#22c55e;color:black;border:none;border-radius:8px">סיים ליקוט</button>
     </div>
   `).join('');
 }
 
-function completePicking(id) {
+function complete(id) {
   const order = orders.find(o => o.id === id);
   if (order) {
-    const pallets = prompt("כמה משטחים יצאו להזמנה?", "8");
+    const pallets = prompt("כמה משטחים?", "8");
     if (pallets) {
       order.pallets = pallets;
       order.status = 'לוקט';
       saveOrders();
       renderOrders();
-      renderManagerStats();
       alert(`ליקוט הושלם! ${pallets} משטחים`);
     }
   }
 }
 
-function renderManagerStats() {
-  const container = document.getElementById('managerStats');
-  const branchStats = {};
-  orders.forEach(o => {
-    branchStats[o.branch] = (branchStats[o.branch] || 0) + 1;
-  });
-
-  const topBranches = Object.entries(branchStats).sort((a,b) => b[1] - a[1]).slice(0,5);
-
-  let html = `<h3>סניפים מובילים</h3>`;
-  topBranches.forEach(([branch, count]) => {
-    html += `<div style="background:#22263a;padding:12px;margin-bottom:8px;border-radius:8px">${branch} — ${count} הזמנות</div>`;
-  });
-
-  const stale = branches.filter(b => {
-    return !orders.some(o => o.branch === b.name && (Date.now() - o.id) < 1000*60*60*24*14);
-  });
-
-  if (stale.length > 0) {
-    html += `<div style="color:#ef4444;margin-top:20px">⚠️ סניפים שלא הזמינו מעל שבועיים:<br>${stale.map(b => b.name).join(', ')}</div>`;
-  }
-
-  container.innerHTML = html;
-}
-
-// Push Notifications
-function notifyNewOrder(order) {
-  if (Notification.permission === 'granted') {
-    new Notification('הזמנ
+// Start
+renderOrders();
+</script>
+</body>
+</html>
